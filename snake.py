@@ -1,7 +1,11 @@
-import pygame,sys,random
+import pygame,sys,random 
+import numpy as np
 from pygame.math import Vector2
 
+number = 0
+
 class SNAKE:
+	
 	def __init__(self):
 		pygame.display.set_caption("El jueguito de la serpiente pa chucho")
 		self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
@@ -83,7 +87,8 @@ class SNAKE:
 			self.body = body_copy[:]
 
 	def add_block(self):
-		self.new_block = True
+		self.new_block = True #Bandera 
+		number += 1 
 
 	def play_crunch_sound(self):
 		self.crunch_sound.play()
@@ -91,24 +96,32 @@ class SNAKE:
 	def reset(self):
 		self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
 		self.direction = Vector2(0,0)
-
 	
 class FRUIT:
 	def __init__(self):
-		self.randomize()
-
+		self.randomize()		
+		random = np.random.randint(1,10)
+		print (random)
+	
 	def draw_fruit(self):
 		fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
 		screen.blit(apple,fruit_rect)
 		#pygame.draw.rect(screen,(126,166,114),fruit_rect)
 
+	def draw_fruit2(self):
+		#Manzana azul es el primer potenciador, nos va a dar más velocidad a la hora que se genere esta manzana
+		fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
+		screen.blit(Manzana_Azul,fruit_rect)
+
 	def randomize(self):
 		self.x = random.randint(0,cell_number - 1)
 		self.y = random.randint(0,cell_number - 1)
-		self.pos = Vector2(self.x,self.y)
-
+		self.pos = Vector2(self.x,self.y)		
+		
 class MAIN:
+	
 	def __init__(self):
+		random = np.random.randint(1,3)
 		self.snake = SNAKE()
 		self.fruit = FRUIT()
 
@@ -119,14 +132,22 @@ class MAIN:
 
 	def draw_elements(self):
 		self.draw_grass()
-		self.fruit.draw_fruit()
+		"""self.fruit.draw_fruit()"""
 		self.snake.draw_snake()
 		self.draw_score()
 
 	def check_collision(self):
+		number = 0
 		if self.fruit.pos == self.snake.body[0]:
 			self.fruit.randomize()
 			self.snake.add_block()
+			if number == random:
+				self.fruit.draw_fruit2
+				number = 0 
+				random = np.random.randint(1,10)
+			else:
+				self.fruit.draw_fruit
+
 			self.snake.play_crunch_sound()
 
 		for block in self.snake.body[1:]:
@@ -180,6 +201,8 @@ screen = pygame.display.set_mode((cell_number * cell_size,cell_number * cell_siz
 clock = pygame.time.Clock()
 apple = pygame.image.load('Graphics/ManzanaMc.png').convert_alpha()
 apple=pygame.transform.scale(apple, (40,40))
+Manzana_Azul = pygame.image.load('Graphics/R.png').convert_alpha()
+Manzana_Azul=pygame.transform.scale(Manzana_Azul, (40,40))
 game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
 
 SCREEN_UPDATE = pygame.USEREVENT
