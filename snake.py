@@ -29,7 +29,7 @@ class SNAKE:
 		self.body_tl = pygame.image.load('Graphics/body_tl.png').convert_alpha()
 		self.body_br = pygame.image.load('Graphics/body_br.png').convert_alpha()
 		self.body_bl = pygame.image.load('Graphics/body_bl.png').convert_alpha()
-		self.crunch_sound = pygame.mixer.Sound('Sound/crunch.wav')
+		self.crunch_sound = pygame.mixer.Sound('Sound/Comer.mp3')
 
 	def draw_snake(self):
 		self.update_head_graphics()
@@ -100,7 +100,7 @@ class SNAKE:
 class FRUIT:
 	def __init__(self):
 		self.randomize()		
-		random = np.random.randint(1,10)
+		random = np.random.randint(1,10)#NO GENERA MANZA
 		print (random)
 	
 	def draw_fruit(self):
@@ -121,7 +121,7 @@ class FRUIT:
 class MAIN:
 	
 	def __init__(self):
-		random = np.random.randint(1,3)
+		random = np.random.randint(1,3) #Problema con generación de manzanas, no aparecen 
 		self.snake = SNAKE()
 		self.fruit = FRUIT()
 
