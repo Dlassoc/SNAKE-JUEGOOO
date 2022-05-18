@@ -146,15 +146,15 @@ class MAIN:
 		self.check_fail()
  
 	def draw_elements(self):
-		frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
-		print(FRUIT.numero)
-		print (f"hola soy {self.random}") 
+		# frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
+		# rdFruits = frutas[np.random.randint(0,3)]
+		# print(FRUIT.numero)
+		# print (f"hola soy {self.random}") 
 		self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
-		if FRUIT.numero%5 == 1:
-			rdFruits = frutas[np.random.randint(0,3)]
-			rdFruits()
-		else:
-			self.fruit.draw_fruit()
+		# if FRUIT.numero%5 == 1:
+		# 	rdFruits()
+		# else:
+		# self.fruit.draw_fruit()
 			
 		self.snake.draw_snake()
 		self.draw_score()
@@ -256,4 +256,4 @@ while True:
 	screen.fill((175,215,70))
 	main_game.draw_elements()
 	pygame.display.update()
-	clock.tick(60)
+	clock.tick(70)
