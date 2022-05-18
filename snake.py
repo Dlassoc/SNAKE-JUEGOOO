@@ -96,7 +96,8 @@ class SNAKE:
 	
 class FRUIT:
 	
-	numero = 0 #La cantidad de veces que come :p	
+	numero = 0 #La cantidad de veces que come :p
+
 	def __init__(self):
 		self.randomize()	
 		random = np.random.randint(1,10)#NO GENERA MANZA
@@ -105,17 +106,25 @@ class FRUIT:
 	
 	
 	def draw_fruit(self):
+		# Manzana
 		fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
 		screen.blit(apple,fruit_rect)
 		#pygame.draw.rect(screen,(126,166,114),fruit_rect)
 
 	def draw_fruit2(self):
-		#sandia
+		# Sandia
 		fruit_rect2 = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
 		screen.blit(sandia,fruit_rect2)
 
+	def draw_fruit3(self):
+		# Coco
+		fruit_rect3 = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
+		screen.blit(coco,fruit_rect3)
 	
-	 
+	def draw_fruit4(self):
+		# Pescado
+		fruit_rect4 = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
+		screen.blit(pescado,fruit_rect4)
 
 	def randomize(self):
 		self.x = random.randint(0,cell_number - 1)
@@ -137,10 +146,16 @@ class MAIN:
 		self.check_fail()
  
 	def draw_elements(self):
+		frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
 		print(FRUIT.numero)
 		print (f"hola soy {self.random}") 
 		self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
-		self.fruit.draw_fruit()
+		if FRUIT.numero%5 == 1:
+			rdFruits = frutas[np.random.randint(0,3)]
+			rdFruits()
+		else:
+			self.fruit.draw_fruit()
+			
 		self.snake.draw_snake()
 		self.draw_score()
 
@@ -148,7 +163,6 @@ class MAIN:
 		
 		if self.fruit.pos == self.snake.body[0]: #Se hace llamada a los atributos inicializados en la clase MAIN
 			FRUIT.numero +=1
-			
 			self.fruit.randomize()
 			self.snake.add_block()
 			self.snake.play_crunch_sound()
@@ -204,9 +218,13 @@ cell_number = 23
 screen = pygame.display.set_mode((cell_number * cell_size,cell_number * cell_size))
 clock = pygame.time.Clock()
 apple = pygame.image.load('Graphics/ManzanaMc.png').convert_alpha()
-apple=pygame.transform.scale(apple, (40,40))
+apple = pygame.transform.scale(apple, (40,40))
 sandia = pygame.image.load('Graficos_despues_15pt/SandiaMc.png').convert_alpha()
-sandia=pygame.transform.scale(sandia, (40,40))
+sandia = pygame.transform.scale(sandia, (40,40))
+coco = pygame.image.load('Graficos_despues_15pt/CocoMc.png').convert_alpha()
+coco = pygame.transform.scale(coco, (40,40))
+pescado = pygame.image.load('Graficos_despues_15pt/PescadoMc.png').convert_alpha()
+pescado = pygame.transform.scale(pescado, (40,40))
 game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
 
 SCREEN_UPDATE = pygame.USEREVENT
