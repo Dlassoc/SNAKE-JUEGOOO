@@ -129,7 +129,18 @@ class FRUIT:
 	def randomize(self):
 		self.x = random.randint(0,cell_number - 1)
 		self.y = random.randint(0,cell_number - 1)
-		self.pos = Vector2(self.x,self.y)		
+		self.pos = Vector2(self.x,self.y)
+
+		# frutas = [ self.draw_fruit2, self.draw_fruit3, self.draw_fruit4]
+		# rdFruits = frutas[np.random.randint(0,3)]
+		# print(FRUIT.numero)
+		# print (f"hola soy {self.random}") 
+		# self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
+		# if FRUIT.numero%5 == 1:
+		# 	print("true")
+		# 	rdFruits()
+		# else:
+		# 	self.draw_fruit()	
 		
 class MAIN:
 	
@@ -148,13 +159,23 @@ class MAIN:
 	def draw_elements(self):
 		# frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
 		# rdFruits = frutas[np.random.randint(0,3)]
-		# print(FRUIT.numero)
-		# print (f"hola soy {self.random}") 
+		print(FRUIT.numero)
+		print (f"hola soy {self.random}") 
+
 		self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
-		# if FRUIT.numero%5 == 1:
-		# 	rdFruits()
-		# else:
-		# self.fruit.draw_fruit()
+
+		if FRUIT.numero%5 == 1:
+			self.fruit.draw_fruit2()
+			print("1")
+		elif FRUIT.numero%7 == 1:
+			self.fruit.draw_fruit3()
+			print("2")
+		elif FRUIT.numero%3 == 1:
+			self.fruit.draw_fruit4()
+			print("3")
+		else:
+			self.fruit.draw_fruit()
+			print("4")
 			
 		self.snake.draw_snake()
 		self.draw_score()
@@ -256,4 +277,4 @@ while True:
 	screen.fill((175,215,70))
 	main_game.draw_elements()
 	pygame.display.update()
-	clock.tick(70)
+	clock.tick(60)
