@@ -108,14 +108,13 @@ class FRUIT:
 		fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
 		screen.blit(apple,fruit_rect)
 		#pygame.draw.rect(screen,(126,166,114),fruit_rect)
-		
-	def reseteo(self):
-		FRUIT.numero = 0
 
 	def draw_fruit2(self):
-		#Manzana azul es el primer potenciador, nos va a dar más velocidad a la hora que se genere esta manzana
+		#sandia
 		fruit_rect2 = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
-		screen.blit(apple_2,fruit_rect2)
+		screen.blit(sandia,fruit_rect2)
+
+	
 	 
 
 	def randomize(self):
@@ -128,7 +127,7 @@ class MAIN:
 	def __init__(self):
 		
 		self.numero = 0
-		self.random = np.random.randint(0,10) #Problema con generación de manzanas, no aparecen 
+		self.random = np.random.randint(1,5) #Problema con generación de manzanas, no aparecen 
 		self.snake = SNAKE()
 		self.fruit = FRUIT()
 
@@ -141,16 +140,7 @@ class MAIN:
 		print(FRUIT.numero)
 		print (f"hola soy {self.random}") 
 		self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
-		if FRUIT.numero == self.random: #	estamos usando el valor de la clase fruit porque este es el que nos dice cuantos se está comiendo 
-			
-			self.fruit.draw_fruit2() 
-			#self.fruit.reseteo()
-			self.random = np.random.randint(1,10)
-
-			
-		else:
-			self.fruit.draw_fruit()
-
+		self.fruit.draw_fruit()
 		self.snake.draw_snake()
 		self.draw_score()
 
@@ -158,6 +148,7 @@ class MAIN:
 		
 		if self.fruit.pos == self.snake.body[0]: #Se hace llamada a los atributos inicializados en la clase MAIN
 			FRUIT.numero +=1
+			
 			self.fruit.randomize()
 			self.snake.add_block()
 			self.snake.play_crunch_sound()
@@ -214,8 +205,8 @@ screen = pygame.display.set_mode((cell_number * cell_size,cell_number * cell_siz
 clock = pygame.time.Clock()
 apple = pygame.image.load('Graphics/ManzanaMc.png').convert_alpha()
 apple=pygame.transform.scale(apple, (40,40))
-apple_2 = pygame.image.load('Graphics/R.png').convert_alpha()
-apple_2=pygame.transform.scale(apple_2, (40,40))
+sandia = pygame.image.load('Graficos_despues_15pt/SandiaMc.png').convert_alpha()
+sandia=pygame.transform.scale(sandia, (40,40))
 game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
 
 SCREEN_UPDATE = pygame.USEREVENT
