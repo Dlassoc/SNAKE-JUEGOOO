@@ -1,3 +1,5 @@
+from pickle import TRUE
+from matplotlib.pyplot import draw
 import pygame,sys,random 
 import numpy as np
 from pygame.math import Vector2
@@ -101,8 +103,9 @@ class FRUIT:
 	def __init__(self):
 		self.randomize()	
 		random = np.random.randint(1,10)#NO GENERA MANZA
-		print (random)
-		print (f"SOY EL NUMERO{FRUIT.numero}")
+		#print (random)
+		#print (f"SOY EL NUMERO{FRUIT.numero}")
+			
 	
 	
 	def draw_fruit(self):
@@ -146,15 +149,15 @@ class MAIN:
 		self.check_fail()
  
 	def draw_elements(self):
-		# frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
-		# rdFruits = frutas[np.random.randint(0,3)]
-		# print(FRUIT.numero)
-		# print (f"hola soy {self.random}") 
+		frutas = [ self.fruit.draw_fruit2, self.fruit.draw_fruit3, self.fruit.draw_fruit4]
+		rdFruits = frutas[np.random.randint(0,3)]
+		print(FRUIT.numero)
+		#print (f"hola soy {self.random}") 
 		self.draw_grass() #El draw_grass es para imprimir las frutas en pantalla
-		# if FRUIT.numero%5 == 1:
-		# 	rdFruits()
-		# else:
-		# self.fruit.draw_fruit()
+		if FRUIT.numero%5 == 1:
+			rdFruits()
+		else:
+			self.fruit.draw_fruit()
 			
 		self.snake.draw_snake()
 		self.draw_score()
@@ -211,11 +214,37 @@ class MAIN:
 		screen.blit(apple,apple_rect)
 		pygame.draw.rect(screen,(56,74,12),bg_rect,2)
 
+WHITE = (255,255,255)
+
+def draw_text(surface, text, size, x, y):
+    font = pygame.font.SysFont("serif", size)#serif es el tipo de letra, size, tamaño de letra
+    text_surface = font.render(text, True, WHITE) #Renderizar el texto y lo pinta en blanco, como definimos en la bariable WHITE
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)#mitad del largo
+    surface.blit(text_surface, text_rect)
+
+fondo = pygame.image.load("Graphics/fondo_azul.jpg") #acá definimos el fondo de la pantalla emergente
+fondo = pygame.transform.scale(fondo, (1000,800))#definimos tamaño de la imagen
+def Pricipal():
+	screen.blit(fondo, [0,0]) #Acá activamos la pantalla e inicia en la coordenada 0,0
+	draw_text(screen, "Snake para Chucho :D", 70, 340 , 240)
+	draw_text(screen, "Daniel Camilo Lasso Castañeda", 30, 340 , 320)
+	draw_text(screen, "Santiago Quintero Grisales", 30, 340 , 350)
+	pygame.display.flip()
+	waiting = TRUE
+	while waiting:
+		clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == pygame.KEYUP:
+				waiting = False
+
+
 pygame.mixer.pre_init(44100,-16,2,512)
 pygame.init()
 cell_size = 30
 cell_number = 23
 screen = pygame.display.set_mode((cell_number * cell_size,cell_number * cell_size))
+
 clock = pygame.time.Clock()
 apple = pygame.image.load('Graphics/ManzanaMc.png').convert_alpha()
 apple = pygame.transform.scale(apple, (40,40))
@@ -230,10 +259,12 @@ game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE,150)
 
+Pricipal()
 main_game = MAIN()
 
 while True:
 	for event in pygame.event.get():
+		
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
@@ -252,8 +283,9 @@ while True:
 			if event.key == pygame.K_LEFT:
 				if main_game.snake.direction.x != 1:
 					main_game.snake.direction = Vector2(-1,0)
+	
 
-	screen.fill((175,215,70))
+	screen.fill((175,215,70))#COLORES DEL FONDO
 	main_game.draw_elements()
 	pygame.display.update()
-	clock.tick(70)
+	clock.tick(60)
