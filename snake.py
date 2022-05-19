@@ -273,6 +273,7 @@ def draw_text(surface, text, size, x, y):
 
 
 def Pricipal():
+    pygame.display.set_caption("El jueguito de la serpiente pa chucho")
     screen.blit(fondo, [0, 0])
     draw_text(screen, "Snake para chucho", 80, 340, 240)
     draw_text(screen, "Daniel Camilo Lasso Castañeda", 30, 340, 320)
