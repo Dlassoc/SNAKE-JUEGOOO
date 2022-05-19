@@ -6,7 +6,7 @@ import random
 from pygame.math import Vector2
 
 
-class SNAKE:
+class SNAKE:    
 
     def __init__(self):
 
@@ -26,7 +26,7 @@ class SNAKE:
         self.tail_up = pygame.image.load(
             'Graphics/tail_up.png').convert_alpha()
         self.tail_down = pygame.image.load(
-            'Graphics/tail_down.png').convert_alpha()    
+            'Graphics/tail_down.png').convert_alpha()
         self.tail_right = pygame.image.load(
             'Graphics/tail_right.png').convert_alpha()
         self.tail_left = pygame.image.load(
@@ -44,7 +44,7 @@ class SNAKE:
         self.body_bl = pygame.image.load(
             'Graphics/body_bl.png').convert_alpha()
         self.crunch_sound = pygame.mixer.Sound('Sound/Comer.mp3')
-        print (type(self.crunch_sound))
+        print(type(self.crunch_sound))
 
     def draw_snake(self):
         self.update_head_graphics()
@@ -67,7 +67,7 @@ class SNAKE:
                 elif previous_block.y == next_block.y:
                     screen.blit(self.body_horizontal, block_rect)
                 else:
-                    if previous_block.x == -1 and next_block.y == -1 or previous_block.y == -1 and next_block.x == -1: 
+                    if previous_block.x == -1 and next_block.y == -1 or previous_block.y == -1 and next_block.x == -1:
                         screen.blit(self.body_tl, block_rect)
                     elif previous_block.x == -1 and next_block.y == 1 or previous_block.y == 1 and next_block.x == -1:
                         screen.blit(self.body_bl, block_rect)
@@ -88,7 +88,8 @@ class SNAKE:
             self.head = self.head_down
 
     def update_tail_graphics(self):
-        tail_relation = self.body[-2] - self.body[-1]  # El -1 es la ultima posición del vector, el -2 el ante penultimo
+        # El -1 es la ultima posición del vector, el -2 el ante penultimo
+        tail_relation = self.body[-2] - self.body[-1]
         if tail_relation == Vector2(1, 0):
             self.tail = self.tail_left
         elif tail_relation == Vector2(-1, 0):
@@ -122,18 +123,18 @@ class SNAKE:
 
 class FRUIT:
 
-    numero = 0  # La cantidad de veces que come :p
+    contador_comida = 0  # La cantidad de veces que come :p
 
     def __init__(self):
         self.randomize()
-        print (type(self.randomize))
-        
+        print(type(self.randomize))
+
     def draw_fruit(self):
         # Manzana
         fruit_rect = pygame.Rect(
             int(self.pos.x * cell_size), int(self.pos.y * cell_size), cell_size, cell_size)
         screen.blit(apple, fruit_rect)
-        
+
     def draw_fruit2(self):
         # Sandia
         fruit_rect2 = pygame.Rect(
@@ -163,7 +164,7 @@ class MAIN:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
-        print (type(self.snake))
+        print(type(self.snake))
 
     def update(self):
         self.snake.move_snake()
@@ -173,13 +174,13 @@ class MAIN:
     def draw_elements(self):
         self.draw_grass()  # El draw_grass es para imprimir las frutas en pantalla
 
-        if FRUIT.numero % 6 == 1:
+        if FRUIT.contador_comida % 6 == 1:
             self.fruit.draw_fruit3()
 
-        elif FRUIT.numero % 8 == 1:  # elif se usa para una secuancia como de preguntas, va evaluando
+        elif FRUIT.contador_comida % 8 == 1:  # elif se usa para una secuancia como de preguntas, va evaluando
             self.fruit.draw_fruit2()
 
-        elif FRUIT.numero % 5 == 1:
+        elif FRUIT.contador_comida % 5 == 1:
             self.fruit.draw_fruit4()
         else:
             self.fruit.draw_fruit()  # else es un si no cumple nada, pues haga eso ultimo
@@ -189,7 +190,7 @@ class MAIN:
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
-            FRUIT.numero += 1  # Si la cabeza de la serpiente es igual a la posición de la fruta, aumentar uno en el contador
+            FRUIT.contador_comida += 1  # Si la cabeza de la serpiente es igual a la posición de la fruta, aumentar uno en el contador
             self.fruit.randomize()  # QUE APAREZCA UNA FRUTA EN UN LUGAR RANDOM
             self.snake.add_block()  # AÑADIR PARTE AL CUERPO DE LA SERPIENTE
             self.snake.play_crunch_sound()  # REPRODUCIR EL SONIDO DE COMER
@@ -240,22 +241,16 @@ class MAIN:
         screen.blit(apple, apple_rect)
         screen.blit(apple, apple_rect)
 
-WHITE = (255, 255, 255) #color de la letra 
 
-def draw_text(surface, text, size, x, y):
-    # serif es el tipo de letra, size, tamaño de letra
-    font = pygame.font.SysFont("serif", size)
-    # Renderizar el texto y lo pinta en blanco, como definimos en la bariable WHITE
-    text_surface = font.render(text, True, WHITE)
-    text_rect = text_surface.get_rect()
-    text_rect.midtop = (x, y)  # mitad del largo
+WHITE = (255, 255, 255)  # color de la letra
 
 def draw_text(surface, text, size, x, y):
     font = pygame.font.SysFont("serif", size)  # Serif es un tipo de letra
     text_surface = font.render(text, True, WHITE)  # Letra blanca
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)  # Que aparezca entre mid y top (posición)
-    surface.blit(text_surface, text_rect) #grenerar el recuadro de menú
+    surface.blit(text_surface, text_rect)  # grenerar el recuadro de menú
+
 
 def Pricipal():
     pygame.display.set_caption("El jueguito de la serpiente pa chucho")
@@ -263,8 +258,8 @@ def Pricipal():
     draw_text(screen, "Snake para chucho", 80, 340, 240)
     draw_text(screen, "Daniel Camilo Lasso Castañeda", 30, 340, 320)
     draw_text(screen, "Santiago Quintero Grisales", 30, 340, 350)
-    pygame.display.flip() #nos muestra la interfaz completa
-    waiting = TRUE #con waiting, estamos diciendole al programa que espere a que cuando se pulse una tecla, inicie el juego, antes no 
+    pygame.display.flip()  # nos muestra la interfaz completa
+    waiting = TRUE  # con waiting, estamos diciendole al programa que espere a que cuando se pulse una tecla, inicie el juego, antes no
     while waiting:
         clock.tick(60)
         for event in pygame.event.get():
@@ -272,13 +267,13 @@ def Pricipal():
                 waiting = False
 
 
-pygame.mixer.pre_init(44100, -16, 2, 512)# Inicializa el modulo de mixer, el cual es el de sonido para poder aplicar los efectos del sonido
+# Inicializa el modulo de mixer, el cual es el de sonido para poder aplicar los efectos del sonido
+pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 cell_size = 30  # tamaño de las celdas
 cell_number = 23  # numero de celdas
 screen = pygame.display.set_mode(
     (cell_number * cell_size, cell_number * cell_size))  # Tamaño en la pantalla
-print (type(screen))
 
 clock = pygame.time.Clock()  # clock hace referencia a los fps
 apple = pygame.image.load('Comida/ManzanaMc.png').convert_alpha()
@@ -294,7 +289,6 @@ fondo = pygame.image.load("Graphics/fondo_rojo.jpg")
 # REDIMENSIONAMOS tamaño de la imagen
 fondo = pygame.transform.scale(fondo, (1000, 800))
 game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
-
 SCREEN_UPDATE = pygame.USEREVENT  # userevent es una funcion especial de pygame
 # Hace referencia a la velocidad de la serpiente, entre mas valor mas lento, y entre mas bajo, mas rapido
 pygame.time.set_timer(SCREEN_UPDATE, 85)
