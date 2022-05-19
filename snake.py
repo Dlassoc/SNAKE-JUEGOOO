@@ -163,6 +163,7 @@ class MAIN:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
+        print (type(self.snake))
 
     def update(self):
         self.snake.move_snake()
@@ -277,6 +278,7 @@ cell_size = 30  # tamaño de las celdas
 cell_number = 23  # numero de celdas
 screen = pygame.display.set_mode(
     (cell_number * cell_size, cell_number * cell_size))  # Tamaño en la pantalla
+print (type(screen))
 
 clock = pygame.time.Clock()  # clock hace referencia a los fps
 apple = pygame.image.load('Comida/ManzanaMc.png').convert_alpha()
