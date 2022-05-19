@@ -1,5 +1,4 @@
 from pickle import TRUE
-from tkinter import N
 from matplotlib.pyplot import draw
 import pygame
 import sys
@@ -24,21 +23,18 @@ class SNAKE:
             'Graphics/head_right.png').convert_alpha()
         self.head_left = pygame.image.load(
             'Graphics/head_left.png').convert_alpha()
-
         self.tail_up = pygame.image.load(
             'Graphics/tail_up.png').convert_alpha()
         self.tail_down = pygame.image.load(
-            'Graphics/tail_down.png').convert_alpha()
+            'Graphics/tail_down.png').convert_alpha()    
         self.tail_right = pygame.image.load(
             'Graphics/tail_right.png').convert_alpha()
         self.tail_left = pygame.image.load(
             'Graphics/tail_left.png').convert_alpha()
-
         self.body_vertical = pygame.image.load(
             'Graphics/body_vertical.png').convert_alpha()
         self.body_horizontal = pygame.image.load(
             'Graphics/body_horizontal.png').convert_alpha()
-
         self.body_tr = pygame.image.load(
             'Graphics/body_tr.png').convert_alpha()
         self.body_tl = pygame.image.load(
@@ -48,6 +44,7 @@ class SNAKE:
         self.body_bl = pygame.image.load(
             'Graphics/body_bl.png').convert_alpha()
         self.crunch_sound = pygame.mixer.Sound('Sound/Comer.mp3')
+        print (type(self.crunch_sound))
 
     def draw_snake(self):
         self.update_head_graphics()
@@ -129,14 +126,14 @@ class FRUIT:
 
     def __init__(self):
         self.randomize()
-
+        print (type(self.randomize))
+        
     def draw_fruit(self):
         # Manzana
         fruit_rect = pygame.Rect(
             int(self.pos.x * cell_size), int(self.pos.y * cell_size), cell_size, cell_size)
         screen.blit(apple, fruit_rect)
-        # pygame.draw.rect(screen,(126,166,114),fruit_rect)
-
+        
     def draw_fruit2(self):
         # Sandia
         fruit_rect2 = pygame.Rect(
@@ -164,8 +161,6 @@ class FRUIT:
 class MAIN:
 
     def __init__(self):
-
-        self.numero = 0
         self.snake = SNAKE()
         self.fruit = FRUIT()
 
@@ -244,9 +239,7 @@ class MAIN:
         screen.blit(apple, apple_rect)
         screen.blit(apple, apple_rect)
 
-
 WHITE = (255, 255, 255) #color de la letra 
-
 
 def draw_text(surface, text, size, x, y):
     # serif es el tipo de letra, size, tamaño de letra
@@ -263,16 +256,14 @@ def draw_text(surface, text, size, x, y):
     text_rect.midtop = (x, y)  # Que aparezca entre mid y top (posición)
     surface.blit(text_surface, text_rect) #grenerar el recuadro de menú
 
-
 def Pricipal():
     pygame.display.set_caption("El jueguito de la serpiente pa chucho")
     screen.blit(fondo, [0, 0])
     draw_text(screen, "Snake para chucho", 80, 340, 240)
     draw_text(screen, "Daniel Camilo Lasso Castañeda", 30, 340, 320)
     draw_text(screen, "Santiago Quintero Grisales", 30, 340, 350)
-
     pygame.display.flip() #nos muestra la interfaz completa
-    waiting = TRUE
+    waiting = TRUE #con waiting, estamos diciendole al programa que espere a que cuando se pulse una tecla, inicie el juego, antes no 
     while waiting:
         clock.tick(60)
         for event in pygame.event.get():
@@ -280,8 +271,7 @@ def Pricipal():
                 waiting = False
 
 
-# Inicializa el modulo de mixer, el cual es el de sonido para poder aplicar los efectos del sonido
-pygame.mixer.pre_init(44100, -16, 2, 512)
+pygame.mixer.pre_init(44100, -16, 2, 512)# Inicializa el modulo de mixer, el cual es el de sonido para poder aplicar los efectos del sonido
 pygame.init()
 cell_size = 30  # tamaño de las celdas
 cell_number = 23  # numero de celdas
